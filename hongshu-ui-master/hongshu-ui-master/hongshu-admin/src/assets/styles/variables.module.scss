@@ -1,0 +1,90 @@
+// base color - 基础色定义
+$blue: #324157;
+$light-blue: #3A71A8;
+$red: #ff2442;      // 小红书红
+$pink: #ff657a;
+$green: #1fb416;
+$tiffany: #4AB7BD;
+$yellow: #FEC171;
+$panGreen: #30B08F;
+
+// --- 小红书风格菜单主题定制 ---
+$base-menu-color: #5a5a5a;        // 稍微深一点，提高可读性
+$base-menu-color-active: #ff2442;
+$base-menu-background: #ffffff;
+
+// Logo 标题颜色
+$base-logo-title-color: #ff2442;
+
+// 亮色模式配置
+$base-menu-light-color: rgba(0, 0, 0, 0.75);
+$base-menu-light-background: #ffffff;
+$base-logo-light-title-color: #ff2442;
+
+// 子菜单美化
+$base-sub-menu-background: #f8f8f8;      // 微妙的层次区分
+$base-sub-menu-hover: #fff0f2;           // 悬浮红晕
+
+// --- 🆕 新增：增加视觉层次的关键变量 ---
+// 边框颜色 - 解决"太白了"的问题
+$border-color-base: #e8e8e8;             // 基础边框色
+$border-color-light: #f0f0f0;            // 浅边框
+$border-color-dark: #d9d9d9;             // 深边框
+
+// 背景层次
+$bg-color-white: #ffffff;
+$bg-color-gray: #fafafa;                 // 浅灰背景
+$bg-color-gray-deep: #f5f5f5;            // 深灰背景
+$bg-color-hover: #fff5f6;                // 悬浮红底色
+
+// 阴影 - 增加立体感
+$box-shadow-light: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+$box-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+$box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+// 分割线
+$divider-color: #eeeeee;
+
+// --- Element UI 覆盖 ---
+$--color-primary: #ff2442;
+$--color-success: #1fb416;
+$--color-warning: #ffb300;
+$--color-danger: #ff2442;
+$--color-info: #909399;
+
+// 边框圆角
+$--border-radius-base: 8px;              // 增加圆角，更现代
+$--border-radius-small: 4px;
+
+// 侧边栏宽度
+$base-sidebar-width: 220px;
+
+// --- 🆕 侧边栏增强样式（需要配合CSS使用）---
+$menu-item-border-radius: 8px;           // 菜单项圆角
+$menu-item-margin: 4px 8px;              // 菜单项外边距
+
+// the :export directive
+:export {
+  menuColor: $base-menu-color;
+  menuLightColor: $base-menu-light-color;
+  menuColorActive: $base-menu-color-active;
+  menuBackground: $base-menu-background;
+  menuLightBackground: $base-menu-light-background;
+  subMenuBackground: $base-sub-menu-background;
+  subMenuHover: $base-sub-menu-hover;
+  sideBarWidth: $base-sidebar-width;
+  logoTitleColor: $base-logo-title-color;
+  logoLightTitleColor: $base-logo-light-title-color;
+  primaryColor: $--color-primary;
+  successColor: $--color-success;
+  dangerColor: $--color-danger;
+  infoColor: $--color-info;
+  warningColor: $--color-warning;
+
+  // 新增导出
+  borderColorBase: $border-color-base;
+  bgColorGray: $bg-color-gray;
+  boxShadowLight: $box-shadow-light;
+  boxShadowCard: $box-shadow-card;
+  menuItemBorderRadius: $menu-item-border-radius;
+}

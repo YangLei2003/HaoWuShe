@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongshu.system.mapper.SysUserMapper">
+
+	<resultMap type="SysUser" id="SysUserResult">
+		<id     property="userId"       column="user_id"      />
+		<result property="userName"     column="user_name"    />
+		<result property="nickName"     column="nick_name"    />
+		<result property="email"        column="email"        />
+		<result property="phonenumber"  column="phonenumber"  />
+		<result property="sex"          column="sex"          />
+		<result property="avatar"       column="avatar"       />
+		<result property="password"     column="password"     />
+		<result property="createBy"     column="create_by"    />
+		<result property="createTime"   column="create_time"  />
+		<result property="updateBy"     column="update_by"    />
+		<result property="updateTime"   column="update_time"  />
+		<result property="remark"       column="remark"       />
+	</resultMap>
+
+	<sql id="selectUserVo">
+		select u.user_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex,  u.create_time
+		from sys_user u
+	</sql>
+
+	<select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
+		select u.user_id,  u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.create_time
+		from sys_user u
+		<where>
+		<if test="userId != null and userId != 0">
+			AND u.user_id = #{userId}
+		</if>
+		<if test="userName != null and userName != ''">
+			AND u.user_name like concat('%', #{userName}, '%')
+		</if>
+		<if test="status != null and status != ''">
+			AND u.status = #{status}
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat('%', #{phonenumber}, '%')
+		</if>
+		<if test="params.beginTime != null and params.beginTime != ''">
+			AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+		</if>
+		<if test="params.endTime != null and params.endTime != ''">
+			AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+		</if>
+		${params.dataScope}
+		</where>
+	</select>
+
+	<select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		where u.user_name = #{userName}
+	</select>
+
+	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		where u.user_id = #{userId}
+	</select>
+
+	<select id="checkUserNameUnique" parameterType="String" resultMap="SysUserResult">
+		select user_id, user_name from sys_user where user_name = #{userName} limit 1
+	</select>
+
+	<select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
+		select user_id, phonenumber from sys_user where phonenumber = #{phonenumber} limit 1
+	</select>
+
+	<select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
+		select user_id, email from sys_user where email = #{email} limit 1
+	</select>
+
+	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user(
+		<if test="userId != null and userId != 0">user_id,</if>
+		<if test="userName != null and userName != ''">user_name,</if>
+		<if test="nickName != null and nickName != ''">nick_name,</if>
+		<if test="email != null and email != ''">email,</if>
+		<if test="avatar != null and avatar != ''">avatar,</if>
+		<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+		<if test="sex != null and sex != ''">sex,</if>
+		<if test="password != null and password != ''">password,</if>
+		create_time
+		)values(
+		<if test="userId != null and userId != ''">#{userId},</if>
+		<if test="userName != null and userName != ''">#{userName},</if>
+		<if test="nickName != null and nickName != ''">#{nickName},</if>
+		<if test="email != null and email != ''">#{email},</if>
+		<if test="avatar != null and avatar != ''">#{avatar},</if>
+		<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+		<if test="sex != null and sex != ''">#{sex},</if>
+		<if test="password != null and password != ''">#{password},</if>
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateUser" parameterType="SysUser">
+		update sys_user
+		<set>
+			<if test="userName != null and userName != ''">user_name = #{userName},</if>
+			<if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+			<if test="email != null ">email = #{email},</if>
+			<if test="phonenumber != null ">phonenumber = #{phonenumber},</if>
+			<if test="sex != null and sex != ''">sex = #{sex},</if>
+			<if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
+			<if test="password != null and password != ''">password = #{password},</if>
+			update_time = sysdate()
+		</set>
+		where user_id = #{userId}
+	</update>
+
+	<update id="updateUserAvatar" parameterType="SysUser">
+		update sys_user set avatar = #{avatar} where user_name = #{userName}
+	</update>
+
+	<update id="resetUserPwd" parameterType="SysUser">
+		update sys_user set password = #{password} where user_name = #{userName}
+	</update>
+
+</mapper>
